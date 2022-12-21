@@ -8,7 +8,7 @@
         <span class="content-sub-card">Easy</span>
       </button>
       <button class="sub-card-home-page" @click="startGame('medium')">
-        <span class="content-sub-card content-sub-card1">4x4</span>
+        <span class="content-sub-card content-sub-card1">6x6</span>
         <span class="content-sub-card">Medium</span>
       </button>
       <button class="sub-card-home-page" @click="startGame('hard')">
@@ -16,7 +16,7 @@
         <span class="content-sub-card">Hard</span>
       </button>
       <button class="sub-card-home-page" @click="startGame('super-hard')">
-        <span class="content-sub-card content-sub-card1">8x8</span>
+        <span class="content-sub-card content-sub-card1">10x10</span>
         <span class="content-sub-card">Super Hard</span>
       </button>
     </div>

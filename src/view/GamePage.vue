@@ -1,6 +1,6 @@
 <template>
   <div class="game-page">
-    <Card />
+    <Card :level="level" />
   </div>
 </template>
 
@@ -10,6 +10,12 @@ export default {
   name: "GamePage",
   components: {
     Card,
+  },
+  props: {
+    level: {
+      type: String,
+      default: "",
+    },
   },
 };
 </script>

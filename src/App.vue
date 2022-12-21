@@ -1,6 +1,6 @@
 <template>
   <home-page v-if="currentPage === 'home-page'" @startGame="gamePlay($event)" />
-  <game-page v-else-if="currentPage === 'game-page'" />
+  <game-page v-else-if="currentPage === 'game-page'" :level="level" />
   <result-page v-else />
   <footer-game />
 </template>
@@ -16,11 +16,12 @@ export default {
   data() {
     return {
       currentPage: "home-page",
+      level: "",
     };
   },
   methods: {
     gamePlay(data) {
-      console.log(data);
+      this.level = data;
       this.currentPage = "game-page";
     },
   },
