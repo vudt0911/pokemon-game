@@ -34,7 +34,6 @@ export default {
     handlerResult(result) {
       if (result === "win") {
         this.resultTime = new Date().getTime() - this.timeStart;
-        console.log(this.resultTime);
         this.currentPage = "result-page";
       }
     },

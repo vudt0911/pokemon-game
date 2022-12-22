@@ -10,6 +10,11 @@
           this.cardObject[index].isFlipped === true ||
           this.cardObject[index].isMatcher === true,
       }"
+      :style="{
+        width: `${480 / Math.sqrt(arrayCard.length)}px`,
+        height: `${640 / Math.sqrt(arrayCard.length)}px`,
+        perspective: `${(480 / Math.sqrt(arrayCard.length)) * 2}px`,
+      }"
     >
       <div class="card__face card__face-front">
         <div
@@ -34,7 +39,6 @@
         ></div>
       </div>
     </div>
-    {{ arrayCard }}
   </div>
 </template>
 
@@ -100,8 +104,7 @@ export default {
 
 <style scoped>
 .card {
-  width: 450px;
-  height: 500px;
+  width: 620px;
   perspective: 1000px;
   margin: 1rem;
   display: flex;
@@ -112,8 +115,8 @@ export default {
 
 .card__inner {
   position: relative;
-  width: 90px;
-  height: 120px;
+  /*width: 90px;*/
+  /*height: 120px;*/
   text-align: center;
   transition: transform 0.3s;
   transform-style: preserve-3d;
@@ -128,7 +131,7 @@ export default {
   overflow: hidden;
   border-radius: 0.5rem;
   padding: 1rem;
-  box-shadow: 0px 3px 10px 3px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 3px 10px 3px rgba(0, 0, 0, 0.2);
 }
 
 .card__face-front {

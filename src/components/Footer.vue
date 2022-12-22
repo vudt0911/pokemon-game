@@ -1,7 +1,9 @@
 <template>
   <p class="footer-game">
-    This game owned by RHP Team in Vue 3 course for begginers -
-    <a href="#">view here</a>
+    This game owned by VuDT in Vue 3 -
+    <a href="https://www.facebook.com/thevu0911" target="_blank"
+      >My facebook view here</a
+    >
   </p>
 </template>
 
@@ -15,8 +17,8 @@ export default {
 .footer-game {
   text-align: center;
   font-size: 1.2rem;
-  color: #fff;
-  background-color: #000;
+  color: #ffffff;
+  background-color: #ccc;
   padding: 1rem;
 }
 </style>
