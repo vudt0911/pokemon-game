@@ -1,6 +1,6 @@
 <template>
   <div class="game-page">
-    <Card :level="level" />
+    <Card :level="level" @result="handlerResult($event)" />
   </div>
 </template>
 
@@ -13,8 +13,12 @@ export default {
   },
   props: {
     level: {
-      type: String,
-      default: "",
+      type: Object,
+    },
+  },
+  methods: {
+    handlerResult(result) {
+      this.$emit("result", result);
     },
   },
 };

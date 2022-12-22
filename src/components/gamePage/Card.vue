@@ -4,13 +4,12 @@
       class="card__inner"
       v-for="(card, index) in arrayCard"
       @click="toggleCardHandler(card, index)"
+      :key="index"
       :class="{
         'toggle-card':
-          card_game[index].isToggle &&
-          card_game[index].cardNumber == card &&
-          card_game[index].index == index,
+          this.cardObject[index].isFlipped === true ||
+          this.cardObject[index].isMatcher === true,
       }"
-      :key="index"
     >
       <div class="card__face card__face-front">
         <div
@@ -35,53 +34,65 @@
         ></div>
       </div>
     </div>
+    {{ arrayCard }}
   </div>
 </template>
 
 <script>
+import { filterObject } from "@/utils/filterObject";
+
 export default {
   name: "Card_game",
   data() {
     return {
-      card_game: [],
-      arrayCard: [],
+      arrayCard: [...this.level.arrayCard],
+      cardObject: { ...this.level.cardObject },
+      isMatcher: [],
+      result: "",
     };
-  },
-  mounted() {
-    if (this.level === "easy") {
-      this.card_game = Array(16).fill({
-        isToggle: false,
-        cardNumber: -1,
-        index: -1,
-      });
-      console.log(this.card_game);
-      this.arrayCard = [1, 2, 3, 4, 5, 6, 7, 8, 1, 2, 3, 4, 5, 6, 7, 8];
-    } else if (this.level === "medium") {
-      // ...
-    } else if (this.level === "hard") {
-      this.level_game = "8x8";
-    } else if (this.level === "super-hard") {
-      this.level_game = "10x10";
-    }
   },
   props: {
     level: {
-      type: String,
-      default: "",
+      type: Object,
     },
   },
   methods: {
     toggleCardHandler(card, index) {
-      console.log(card, index, this.card_game[index].isToggle);
-      if (this.card_game[index].isToggle) {
-        this.card_game[index].isToggle = false;
-        this.card_game[index].cardNumber = card;
-        this.card_game[index].index = index;
-        return;
+      if (this.isMatcher.length === 2) return;
+      if (this.cardObject[index].isFlipped === false) {
+        this.cardObject[index].isFlipped = true;
+        if (this.isMatcher.length === 0) {
+          this.isMatcher.push(index);
+        } else if (this.isMatcher.length === 1) {
+          this.isMatcher.push(index);
+          if (
+            this.cardObject[this.isMatcher[0]].card ===
+            this.cardObject[this.isMatcher[1]].card
+          ) {
+            this.cardObject[this.isMatcher[0]].isMatcher = true;
+            this.cardObject[this.isMatcher[1]].isMatcher = true;
+            this.isMatcher = [];
+          } else {
+            setTimeout(() => {
+              this.cardObject[this.isMatcher[0]].isFlipped = false;
+              this.cardObject[this.isMatcher[1]].isFlipped = false;
+              this.isMatcher = [];
+            }, 500);
+          }
+          // filter object
+          const newObject = filterObject(
+            this.cardObject,
+            (card) => card.isMatcher
+          );
+          // find length of object => Object.keys(newObject).length
+          Object.keys(newObject).length === this.arrayCard.length
+            ? (this.result = "win")
+            : (this.result = "lose");
+          this.$emit("result", this.result);
+        }
+      } else {
+        this.cardObject[index].isFlipped = false;
       }
-      this.card_game[index].isToggle = true;
-      this.card_game[index].cardNumber = card;
-      this.card_game[index].index = index;
     },
   },
 };

@@ -15,25 +15,45 @@
         <span class="content-sub-card content-sub-card1">8x8</span>
         <span class="content-sub-card">Hard</span>
       </button>
-      <button class="sub-card-home-page" @click="startGame('super-hard')">
-        <span class="content-sub-card content-sub-card1">10x10</span>
-        <span class="content-sub-card">Super Hard</span>
-      </button>
     </div>
   </div>
 </template>
 <script>
+import { handlerArrayCard } from "@/utils/handlerArrayCard.js";
 export default {
   name: "HomePage",
   data() {
     return {
       mode: "",
+      arrayCard: [],
+      cardObject: {},
     };
   },
   methods: {
     startGame(mode) {
-      this.mode = mode;
-      this.$emit("startGame", this.mode);
+      if (mode === "easy") {
+        this.arrayCard = handlerArrayCard(8);
+        this.mode = mode;
+      } else if (mode === "medium") {
+        this.arrayCard = handlerArrayCard(18);
+        this.mode = mode;
+      } else if (mode === "hard") {
+        this.arrayCard = handlerArrayCard(32);
+        this.mode = mode;
+      }
+      for (let i = 0; i < this.arrayCard.length; i++) {
+        this.cardObject[i] = {
+          card: this.arrayCard[i],
+          indexOfArrayCard: i,
+          isFlipped: false,
+          isMatcher: false,
+        };
+      }
+      this.$emit("startGame", {
+        mode,
+        arrayCard: this.arrayCard,
+        cardObject: this.cardObject,
+      });
     },
   },
 };

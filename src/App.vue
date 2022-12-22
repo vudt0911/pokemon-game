@@ -1,7 +1,11 @@
 <template>
   <home-page v-if="currentPage === 'home-page'" @startGame="gamePlay($event)" />
-  <game-page v-else-if="currentPage === 'game-page'" :level="level" />
-  <result-page v-else />
+  <game-page
+    v-else-if="currentPage === 'game-page'"
+    :level="level"
+    @result="handlerResult($event)"
+  />
+  <result-page v-else :timer="resultTime" @startAgain="startAgain($event)" />
   <footer-game />
 </template>
 
@@ -16,13 +20,26 @@ export default {
   data() {
     return {
       currentPage: "home-page",
-      level: "",
+      level: {},
+      timeStart: null,
+      resultTime: 0,
     };
   },
   methods: {
     gamePlay(data) {
       this.level = data;
+      this.timeStart = new Date().getTime();
       this.currentPage = "game-page";
+    },
+    handlerResult(result) {
+      if (result === "win") {
+        this.resultTime = new Date().getTime() - this.timeStart;
+        console.log(this.resultTime);
+        this.currentPage = "result-page";
+      }
+    },
+    startAgain(data) {
+      this.currentPage = data;
     },
   },
   components: {
